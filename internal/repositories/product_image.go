@@ -11,6 +11,7 @@ import (
 type ProductImageRepositoryItf interface {
 	Insert(ctx context.Context, productImage domain.ProductImage) (int, error)
 	GetByProductID(ctx context.Context, productID int) ([]domain.ProductImage, error)
+	SetMain(ctx context.Context, productID int, productImageID int) error
 	Delete(ctx context.Context, productImageID int) error
 }
 
@@ -38,6 +39,15 @@ func (r ProductImageRepository) GetByProductID(ctx context.Context, productID in
 		return nil, fmt.Errorf("ProductImageRepository.GetByProductID: %w", err)
 	}
 	return productImage, nil
+}
+
+func (r ProductImageRepository) SetMain(ctx context.Context, productID int, productImageID int) error {
+	query := `UPDATE product_image SET is_main = (id = $2) WHERE product_id = $1`
+	_, err := r.db.ExecContext(ctx, query, productID, productImageID)
+	if err != nil {
+		return fmt.Errorf("ProductImageRepository.SetMain: %w", err)
+	}
+	return nil
 }
 
 func (r ProductImageRepository) Delete(ctx context.Context, productImageID int) error {

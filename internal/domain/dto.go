@@ -54,3 +54,14 @@ type ProductResponse struct {
 	Color       *string                `json:"color"`
 	Images      []ProductImageResponse `json:"images"`
 }
+
+type ProductImageDTO struct {
+	ProductID int    `json:"product_id"`
+	URL       string `json:"url"`
+	IsMain    bool   `json:"is_main"`
+}
+
+type ProductImageSetMainDTO struct {
+	ProductID      int `json:"product_id"`
+	ProductImageID int `json:"product_image_id"`
+}

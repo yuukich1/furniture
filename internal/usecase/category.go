@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
+
 	"furniture/internal/domain"
 	"furniture/internal/repositories"
 )
@@ -20,19 +21,41 @@ type CategoryUseCase struct {
 }
 
 func NewCategoryUseCase(categoryRepo repositories.CategoryRepositoryItf) CategoryUseCaseItf {
-	return CategoryUseCase{categoryRepo: categoryRepo}
+	return &CategoryUseCase{categoryRepo: categoryRepo}
 }
 
-func (u CategoryUseCase) Create(ctx context.Context, dto domain.CategoryDTO) (int, error) {
-	category := domain.Category{
+func toCategoryResponse(category domain.Category) domain.CategoryResponse {
+	return domain.CategoryResponse{
+		ID:       category.ID,
+		Name:     category.Name,
+		ParentID: category.ParentID,
+	}
+}
+
+func toCategoryFromDTO(dto domain.CategoryDTO) domain.Category {
+	return domain.Category{
 		Name:     dto.Name,
 		ParentID: dto.ParentID,
 	}
-	id, err := u.categoryRepo.Insert(ctx, category)
+}
+
+func (u CategoryUseCase) makeResponseList(categories []domain.Category) []domain.CategoryResponse {
+	result := make([]domain.CategoryResponse, 0, len(categories))
+
+	for _, category := range categories {
+		result = append(result, toCategoryResponse(category))
+	}
+
+	return result
+}
+
+func (u CategoryUseCase) Create(ctx context.Context, dto domain.CategoryDTO) (int, error) {
+	categoryID, err := u.categoryRepo.Insert(ctx, toCategoryFromDTO(dto))
 	if err != nil {
 		return 0, fmt.Errorf("CategoryUseCase.Create: %w", err)
 	}
-	return id, nil
+
+	return categoryID, nil
 }
 
 func (u CategoryUseCase) List(ctx context.Context, limit *int, offset *int) ([]domain.CategoryResponse, error) {
@@ -40,15 +63,8 @@ func (u CategoryUseCase) List(ctx context.Context, limit *int, offset *int) ([]d
 	if err != nil {
 		return nil, fmt.Errorf("CategoryUseCase.List: %w", err)
 	}
-	result := make([]domain.CategoryResponse, len(categories))
-	for _, category := range categories {
-		result = append(result, domain.CategoryResponse{
-			ID:       category.ID,
-			Name:     category.Name,
-			ParentID: category.ParentID,
-		})
-	}
-	return result, nil
+
+	return u.makeResponseList(categories), nil
 }
 
 func (u CategoryUseCase) GetByID(ctx context.Context, categoryID int) (domain.CategoryResponse, error) {
@@ -56,27 +72,20 @@ func (u CategoryUseCase) GetByID(ctx context.Context, categoryID int) (domain.Ca
 	if err != nil {
 		return domain.CategoryResponse{}, fmt.Errorf("CategoryUseCase.GetByID: %w", err)
 	}
-	return domain.CategoryResponse{
-		ID:       category.ID,
-		Name:     category.Name,
-		ParentID: category.ParentID,
-	}, nil
+
+	return toCategoryResponse(category), nil
 }
 
 func (u CategoryUseCase) Update(ctx context.Context, id int, dto domain.CategoryDTO) error {
-	err := u.categoryRepo.Update(ctx, id, domain.Category{
-		Name:     dto.Name,
-		ParentID: dto.ParentID,
-	})
-	if err != nil {
+	if err := u.categoryRepo.Update(ctx, id, toCategoryFromDTO(dto)); err != nil {
 		return fmt.Errorf("CategoryUseCase.Update: %w", err)
 	}
+
 	return nil
 }
 
 func (u CategoryUseCase) Delete(ctx context.Context, id int) error {
-	err := u.categoryRepo.Delete(ctx, id)
-	if err != nil {
+	if err := u.categoryRepo.Delete(ctx, id); err != nil {
 		return fmt.Errorf("CategoryUseCase.Delete: %w", err)
 	}
 	return nil
