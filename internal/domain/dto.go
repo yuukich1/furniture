@@ -1,6 +1,7 @@
 package domain
 
 type ProductFilters struct {
+	Name      *string
 	FromPrice *int
 	ToPrice   *int
 	Weight    *int

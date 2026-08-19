@@ -26,7 +26,7 @@ func (h *CategoryHandler) Create(c *gin.Context) {
 	}
 	id, err := h.categoryUseCase.Create(c.Request.Context(), dto)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{
@@ -36,9 +36,24 @@ func (h *CategoryHandler) Create(c *gin.Context) {
 
 func (h *CategoryHandler) List(c *gin.Context) {
 	limit, offset := pagination(c)
-	categories, err := h.categoryUseCase.List(c.Request.Context(), limit, offset)
+	parentIDStr := c.Query("parentID")
+
+	var (
+		categories []domain.CategoryResponse
+		err        error
+	)
+	if parentIDStr != "" {
+		parentID, parseErr := strconv.Atoi(parentIDStr)
+		if parseErr != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid parent ID"})
+			return
+		}
+		categories, err = h.categoryUseCase.GetByParentID(c.Request.Context(), &parentID, limit, offset)
+	} else {
+		categories, err = h.categoryUseCase.List(c.Request.Context(), limit, offset)
+	}
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, categories)
@@ -52,7 +67,7 @@ func (h *CategoryHandler) GetByID(c *gin.Context) {
 	}
 	category, err := h.categoryUseCase.GetByID(c.Request.Context(), id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, category)
@@ -70,7 +85,7 @@ func (h *CategoryHandler) Update(c *gin.Context) {
 		return
 	}
 	if err := h.categoryUseCase.Update(c.Request.Context(), id, dto); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 	c.Status(http.StatusNoContent)
@@ -83,7 +98,7 @@ func (h *CategoryHandler) Delete(c *gin.Context) {
 		return
 	}
 	if err := h.categoryUseCase.Delete(c.Request.Context(), id); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		handleError(c, err)
 		return
 	}
 	c.Status(http.StatusNoContent)

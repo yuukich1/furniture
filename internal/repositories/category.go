@@ -27,7 +27,7 @@ func (r CategoryRepository) Insert(ctx context.Context, category domain.Category
 	query := `INSERT INTO category (name, parent_id) VALUES ($1, $2) RETURNING id`
 	err := r.db.QueryRowContext(ctx, query, category.Name, category.ParentID).Scan(&id)
 	if err != nil {
-		return 0, fmt.Errorf("CategoryRepository.Insert: %w", err)
+		return 0, fmt.Errorf("CategoryRepository.Insert: %w", handleDBError(err))
 	}
 	return id, nil
 }
@@ -46,7 +46,7 @@ func (r CategoryRepository) List(ctx context.Context, limit *int, offset *int) (
 	}
 	err := r.db.SelectContext(ctx, &categories, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("CategoryRepository.List: %w", err)
+		return nil, fmt.Errorf("CategoryRepository.List: %w", handleDBError(err))
 	}
 	return categories, nil
 }
@@ -56,7 +56,7 @@ func (r CategoryRepository) GetByID(ctx context.Context, id int) (domain.Categor
 	query := `SELECT id, name, parent_id FROM category WHERE id = $1`
 	err := r.db.QueryRowContext(ctx, query, id).Scan(&category.ID, &category.Name, &category.ParentID)
 	if err != nil {
-		return domain.Category{}, fmt.Errorf("CategoryRepository.GetById: %w", err)
+		return domain.Category{}, fmt.Errorf("CategoryRepository.GetByID: %w", handleDBError(err))
 	}
 	return category, nil
 }
@@ -67,7 +67,7 @@ func (r CategoryRepository) GetByName(ctx context.Context, name string, limit *i
 	query, args := addPagination(query, []any{name}, limit, offset)
 	err := r.db.SelectContext(ctx, &categories, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("CategoryRepository.GetByName: %w", err)
+		return nil, fmt.Errorf("CategoryRepository.GetByName: %w", handleDBError(err))
 	}
 	return categories, nil
 }
@@ -85,7 +85,7 @@ func (r CategoryRepository) GetByParentID(ctx context.Context, parentID *int, li
 	query, args = addPagination(query, args, limit, offset)
 	err := r.db.SelectContext(ctx, &categories, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("CategoryRepository.GetByParentID: %w", err)
+		return nil, fmt.Errorf("CategoryRepository.GetByParentID: %w", handleDBError(err))
 	}
 	return categories, nil
 }
@@ -94,16 +94,23 @@ func (r CategoryRepository) Update(ctx context.Context, id int, category domain.
 	query := `UPDATE category SET name = $1, parent_id = $2 WHERE id = $3 RETURNING id`
 	err := r.db.QueryRowContext(ctx, query, category.Name, category.ParentID, id).Scan(&category.ID)
 	if err != nil {
-		return fmt.Errorf("CategoryRepository.Update: %w", err)
+		return fmt.Errorf("CategoryRepository.Update: %w", handleDBError(err))
 	}
 	return nil
 }
 
 func (r CategoryRepository) Delete(ctx context.Context, id int) error {
 	query := `DELETE FROM category WHERE id = $1`
-	_, err := r.db.ExecContext(ctx, query, id)
+	result, err := r.db.ExecContext(ctx, query, id)
+	if err != nil {
+		return fmt.Errorf("CategoryRepository.Delete: %w", handleDBError(err))
+	}
+	rows, err := result.RowsAffected()
 	if err != nil {
 		return fmt.Errorf("CategoryRepository.Delete: %w", err)
+	}
+	if rows == 0 {
+		return fmt.Errorf("%w: category %d", domain.ErrNotFound, id)
 	}
 	return nil
 }

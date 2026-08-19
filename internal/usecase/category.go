@@ -12,6 +12,7 @@ type CategoryUseCaseItf interface {
 	Create(ctx context.Context, dto domain.CategoryDTO) (int, error)
 	List(ctx context.Context, limit *int, offset *int) ([]domain.CategoryResponse, error)
 	GetByID(ctx context.Context, categoryID int) (domain.CategoryResponse, error)
+	GetByParentID(ctx context.Context, parentID *int, limit *int, offset *int) ([]domain.CategoryResponse, error)
 	Update(ctx context.Context, id int, dto domain.CategoryDTO) error
 	Delete(ctx context.Context, id int) error
 }
@@ -74,6 +75,14 @@ func (u CategoryUseCase) GetByID(ctx context.Context, categoryID int) (domain.Ca
 	}
 
 	return toCategoryResponse(category), nil
+}
+
+func (u CategoryUseCase) GetByParentID(ctx context.Context, parentID *int, limit *int, offset *int) ([]domain.CategoryResponse, error) {
+	categories, err := u.categoryRepo.GetByParentID(ctx, parentID, limit, offset)
+	if err != nil {
+		return nil, fmt.Errorf("CategoryUseCase.GetByParentID: %w", err)
+	}
+	return u.makeResponseList(categories), nil
 }
 
 func (u CategoryUseCase) Update(ctx context.Context, id int, dto domain.CategoryDTO) error {

@@ -42,7 +42,7 @@ func (r ProductRepository) Insert(ctx context.Context, product domain.Product) (
 		product.Color,
 	).Scan(&id)
 	if err != nil {
-		return 0, fmt.Errorf("ProductRepository.Insert: %w", err)
+		return 0, fmt.Errorf("ProductRepository.Insert: %w", handleDBError(err))
 	}
 	return id, nil
 }
@@ -53,7 +53,7 @@ func (r ProductRepository) List(ctx context.Context, limit *int, offset *int) ([
 	query, args := addPagination(query, []any{}, limit, offset)
 	err := r.db.SelectContext(ctx, &products, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("ProductRepository.List: %w", err)
+		return nil, fmt.Errorf("ProductRepository.List: %w", handleDBError(err))
 	}
 	return products, nil
 }
@@ -76,17 +76,27 @@ func (r ProductRepository) Update(ctx context.Context, id int, product domain.Pr
 		product.Color,
 	).Scan(&product.ID)
 	if err != nil {
-		return 0, fmt.Errorf("ProductRepository.Update: %w", err)
+		return 0, fmt.Errorf("ProductRepository.Update: %w", handleDBError(err))
 	}
 	return product.ID, nil
 }
 
 func (r ProductRepository) Delete(ctx context.Context, productID int) error {
 	query := `DELETE FROM products WHERE id = $1`
-	_, err := r.db.ExecContext(ctx, query, productID)
+	result, err := r.db.ExecContext(ctx, query, productID)
+	if err != nil {
+		return fmt.Errorf("ProductRepository.Delete: %w", handleDBError(err))
+	}
+
+	rows, err := result.RowsAffected()
 	if err != nil {
 		return fmt.Errorf("ProductRepository.Delete: %w", err)
 	}
+
+	if rows == 0 {
+		return fmt.Errorf("%w: product %d", domain.ErrNotFound, productID)
+	}
+
 	return nil
 }
 
@@ -95,7 +105,7 @@ func (r ProductRepository) GetByID(ctx context.Context, id int) (domain.Product,
 	query := `SELECT id, category_id, name, description, price, stock, weight, height, depth, material, color FROM products WHERE id = $1`
 	err := r.db.GetContext(ctx, &product, query, id)
 	if err != nil {
-		return domain.Product{}, fmt.Errorf("ProductRepository.GetByID: %w", err)
+		return domain.Product{}, fmt.Errorf("ProductRepository.GetByID: %w", handleDBError(err))
 	}
 	return product, nil
 }
@@ -106,7 +116,7 @@ func (r ProductRepository) GetByCategoryID(ctx context.Context, categoryID int, 
 	query, args := addPagination(query, []any{categoryID}, limit, offset)
 	err := r.db.SelectContext(ctx, &products, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("ProductRepository.GetByCategoryID: %w", err)
+		return nil, fmt.Errorf("ProductRepository.GetByCategoryID: %w", handleDBError(err))
 	}
 	return products, nil
 }
@@ -117,7 +127,7 @@ func (r ProductRepository) GetByName(ctx context.Context, name string, limit *in
 	query, args := addPagination(query, []any{name}, limit, offset)
 	err := r.db.SelectContext(ctx, &products, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("ProductRepository.GetByName: %w", err)
+		return nil, fmt.Errorf("ProductRepository.GetByName: %w", handleDBError(err))
 	}
 	return products, nil
 }
@@ -148,6 +158,7 @@ func applyFilters(query string, f domain.ProductFilters) (string, []any) {
 		value  *string
 		column string
 	}{
+		{f.Name, "name"},
 		{f.Material, "material"},
 		{f.Color, "color"},
 	}
@@ -171,7 +182,7 @@ func (r ProductRepository) GetByFilter(ctx context.Context, f domain.ProductFilt
 	query, args = addPagination(query, args, limit, offset)
 	err := r.db.SelectContext(ctx, &products, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("ProductRepository.GetByFilter: %w", err)
+		return nil, fmt.Errorf("ProductRepository.GetByFilter: %w", handleDBError(err))
 	}
 	return products, nil
 }

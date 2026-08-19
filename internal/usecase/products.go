@@ -9,9 +9,7 @@ import (
 
 type ProductUseCaseItf interface {
 	Create(ctx context.Context, dto domain.ProductDTO) (int, error)
-	List(ctx context.Context, limit *int, offset *int) ([]domain.ProductResponse, error)
 	GetByID(ctx context.Context, id int) (domain.ProductResponse, error)
-	GetByName(ctx context.Context, name string, limit *int, offset *int) ([]domain.ProductResponse, error)
 	GetByFilters(ctx context.Context, f domain.ProductFilters, limit *int, offset *int) ([]domain.ProductResponse, error)
 	Delete(ctx context.Context, id int) error
 	Update(ctx context.Context, productID int, dto domain.ProductDTO) (int, error)
