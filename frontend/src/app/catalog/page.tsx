@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 import { CATEGORIES, PRODUCTS } from "@/lib/data";
-import HeaderCatalog from "../components/cat/headerCat";
-import ProductGrid from "../components/cat/prodGrid";
+import HeaderCatalog from "@/components/cat/headerCat";
+import ProductGrid from "@/components/cat/prodGrid";
 
 export default function CatalogPage() {
   const [activeCategoryId, setActiveCategoryId] = useState<number | string>(

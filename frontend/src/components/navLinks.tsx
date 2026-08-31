@@ -1,4 +1,5 @@
-import { NAV_LINKS, NavLink } from "../../cfg/nav";
+import { NAV_LINKS, NavLink } from "@/cfg/nav";
+
 
 
 interface NavLinksProps {

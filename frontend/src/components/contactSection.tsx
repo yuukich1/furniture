@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SITE_CONFIG } from "../../cfg/site";
+import { SITE_CONFIG } from "@/cfg/site";
 
 export default function ContactsSection() {
   const { contacts } = SITE_CONFIG;

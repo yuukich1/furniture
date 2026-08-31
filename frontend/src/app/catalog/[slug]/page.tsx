@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/lib/data";
 import { formatSlug } from "@/lib/utils";
-import HeaderCatalog from "@/app/components/cat/headerCat";
-import ProductDetailsView from "@/app/components/cat/detailView";
+import ProductDetailsView from "@/components/cat/detailView";
+import HeaderCatalog from "@/components/cat/headerCat";
+
 
 
 interface ProductPageProps {
