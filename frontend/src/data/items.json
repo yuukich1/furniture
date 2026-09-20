@@ -1,0 +1,236 @@
+[
+    {
+        "id": 1,
+        "name": "Альберт",
+        "price": 300000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        },
+        "detail": {
+            "additional": {
+                "name": "Спальное место",
+                "price": 370000.0
+            }
+        }
+    },
+    {
+        "id": 2,
+        "name": "Честер",
+        "price": 545000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Диван с изогнутой спинкой Нона",
+        "price": 28000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Черчиль",
+        "price": 220000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Диван с металлическими вставками золото Хан",
+        "price": 642000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 6,
+        "name": "Офисный диван Клерк",
+        "price": 60000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 7,
+        "name": "Шерон",
+        "price": 300000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 1,
+            "name": "Диван"
+        }
+    },
+    {
+        "id": 8,
+        "name": "Кровать бежевая стела, с подъёмным механизмом",
+        "price": 80000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 2,
+            "name": "Кровать"
+        }
+    },
+    {
+        "id": 9,
+        "name": "Кровать круглая Рина",
+        "price": 230000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 2,
+            "name": "Кровать"
+        }
+    },
+    {
+        "id": 10,
+        "name": "Синее кресло",
+        "price": 52100.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 3,
+            "name": "Кресло"
+        }
+    },
+    {
+        "id": 11,
+        "name": "Белое кресло",
+        "price": 25600.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 3,
+            "name": "Кресло"
+        }
+    },
+    {
+        "id": 12,
+        "name": "Розовое кресло",
+        "price": 62000.0,
+        "images": [
+            {
+                "image_url": "main_image.url",
+                "is_main": true
+            },
+            {
+                "image_url": "image.url",
+                "is_main": false
+            }
+        ],
+        "category": {
+            "id": 3,
+            "name": "Кресло"
+        }
+    }
+]
