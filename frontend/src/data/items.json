@@ -204,18 +204,24 @@
     "name": "Шерон",
     "price": 300000,
     "categoryId": 1,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/sofas/sheron/1.png",
     "images": [
       {
         "id": 701,
         "productId": 7,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/sofas/sheron/1.png",
         "isMain": true
       },
       {
         "id": 702,
         "productId": 7,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/sofas/sheron/2.png",
+        "isMain": false
+      },
+      {
+        "id": 703,
+        "productId": 7,
+        "imageUrl": "/sofas/sheron/3.png",
         "isMain": false
       }
     ],
@@ -245,21 +251,27 @@
   },
   {
     "id": 9,
-    "name": "Кровать круглая Рина",
+    "name": "Рина",
     "price": 230000,
     "categoryId": 2,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/beds/rina/1.png",
     "images": [
       {
         "id": 901,
         "productId": 9,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/beds/rina/1.png",
         "isMain": true
       },
       {
         "id": 902,
         "productId": 9,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/beds/rina/3.png",
+        "isMain": false
+      },
+      {
+        "id": 903,
+        "productId": 9,
+        "imageUrl": "/beds/rina/3.png",
         "isMain": false
       }
     ],
@@ -270,18 +282,24 @@
     "name": "Синее кресло",
     "price": 52100,
     "categoryId": 3,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/armchairs/blue/1.png",
     "images": [
       {
         "id": 1001,
         "productId": 10,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/blue/1.png",
         "isMain": true
       },
       {
         "id": 1002,
         "productId": 10,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/blue/1.png",
+        "isMain": false
+      },
+      {
+        "id": 1003,
+        "productId": 10,
+        "imageUrl": "/armchairs/blue/3.png",
         "isMain": false
       }
     ],
@@ -292,18 +310,24 @@
     "name": "Белое кресло",
     "price": 25600,
     "categoryId": 3,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/armchairs/white/1.png",
     "images": [
       {
         "id": 1101,
         "productId": 11,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/white/1.png",
         "isMain": true
       },
       {
         "id": 1102,
         "productId": 11,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/white/2.png",
+        "isMain": false
+      },
+      {
+        "id": 1103,
+        "productId": 11,
+        "imageUrl": "/armchairs/white/3.png",
         "isMain": false
       }
     ],
@@ -314,18 +338,24 @@
     "name": "Розовое кресло",
     "price": 62000,
     "categoryId": 3,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/armchairs/pink/1.png",
     "images": [
       {
         "id": 1201,
         "productId": 12,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/pink/1.png",
         "isMain": true
       },
       {
         "id": 1202,
         "productId": 12,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/armchairs/pink/2.png",
+        "isMain": false
+      },
+      {
+        "id": 1202,
+        "productId": 12,
+        "imageUrl": "/armchairs/pink/3.png",
         "isMain": false
       }
     ],
