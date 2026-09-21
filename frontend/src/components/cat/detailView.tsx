@@ -180,10 +180,19 @@ export default function ProductDetailsView({ product }: ProductDetailsViewProps)
           variants={fadeInVariant}
           className="w-full space-y-4"
         >
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-warm-gray">
-            Галерея
-          </h3>
-          <div className="flex overflow-x-auto space-x-4 sm:space-x-6 pb-4 scrollbar-none snap-x snap-mandatory">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-warm-gray">
+              Галерея
+            </h3>
+            <span className="hidden lg:flex items-center gap-1.5 text-xs text-warm-gray font-light uppercase tracking-wider">
+              Листайте
+              <svg className="w-3.5 h-3.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </span>
+          </div>
+
+          <div className="flex overflow-x-auto space-x-4 sm:space-x-6 pb-4 scrollbar-none lg:scrollbar-thin lg:scrollbar-thumb-walnut/30 lg:scrollbar-track-transparent hover:lg:scrollbar-thumb-walnut/60 snap-x snap-mandatory transition-colors duration-300">
             {galleryImages.map((imgUrl, index) => (
               <div 
                 key={index} 

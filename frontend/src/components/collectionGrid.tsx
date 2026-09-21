@@ -79,7 +79,7 @@ export default function CollectionGrid() {
 
   const activeProducts = PRODUCTS.filter(
     (product) => String(product.categoryId) === String(activeCategoryId)
-  );
+  ).slice(0, 3);
 
   const scrollTabs = (direction: "left" | "right") => {
     const container = document.getElementById("collections-scroll-container");
@@ -151,21 +151,18 @@ export default function CollectionGrid() {
           </div>
         </AnimatePresence>
 
-        <div className="mt-28 sm:mt-36 pt-16 border-t border-stone-200">
-          <div className="p-8 sm:p-16 flex flex-col md:flex-row items-center justify-between gap-8 rounded-sm">
-            <div className="text-center md:text-left">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-stone-400 block mb-3">
-                Все коллекции
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-stone-900 max-w-xl">
-                Изучите полный каталог дизайнерской мебели и предметов интерьера
-              </h3>
-            </div>
-            <div className="shrink-0 w-full md:w-auto">
-              <Button href="/catalog" variant="primary" size="lg" className="w-full md:w-auto">
-                Смотреть весь каталог
-              </Button>
-            </div>
+        <div className="mt-20 sm:mt-28 pt-10 border-t border-stone-200">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 py-4">
+            <p className="font-serif text-lg sm:text-2xl text-stone-800 font-light text-center sm:text-left">
+              Полная коллекция предметов интерьера
+            </p>
+            <Link 
+              href="/catalog" 
+              className="group inline-flex items-center gap-3 text-sm tracking-widest uppercase text-stone-900 font-medium hover:text-stone-600 transition-colors"
+            >
+              <span>Смотреть весь каталог</span>
+              <span className="text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
           </div>
         </div>
       </div>

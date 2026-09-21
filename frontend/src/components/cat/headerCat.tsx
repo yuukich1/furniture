@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { CATEGORIES, PRODUCTS } from "@/lib/data";
 
 import HeaderCatalogMobile from "./headerCatMobile";
@@ -18,6 +19,7 @@ export default function HeaderCatalog({
   onSelectCategory,
   productName,
 }: HeaderCatalogProps) {
+  const router = useRouter();
   const [internalCategoryId, setInternalCategoryId] = useState<number | string>(
     activeCategoryId ?? CATEGORIES[0].id
   );
@@ -34,6 +36,11 @@ export default function HeaderCatalog({
   );
 
   const handleCategoryChange = (id: number | string) => {
+    if (productName) {
+      router.push(`/catalog?category=${id}`);
+      return;
+    }
+
     const newIndex = CATEGORIES.findIndex((c) => String(c.id) === String(id));
     const currentIndex = prevCategoryIndexRef.current;
 
@@ -51,6 +58,12 @@ export default function HeaderCatalog({
 
   const scrollToProduct = (productId: number | string) => {
     setIsMobileMenuOpen(false);
+    
+    if (productName) {
+      router.push(`/catalog?category=${currentCategoryId}&product=${productId}`);
+      return;
+    }
+
     const element = document.getElementById(`product-${productId}`);
     if (element) {
       const offset = 140;

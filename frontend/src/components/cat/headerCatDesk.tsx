@@ -46,19 +46,22 @@ export default function HeaderCatalogDesktop({
           </Link>
           <div className="h-4 w-px bg-muted shrink-0" />
           <nav className="flex items-center gap-8">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => onSelectCategory(category.id)}
-                className={`text-base transition-colors ${
-                  String(currentCategoryId) === String(category.id)
-                    ? "text-walnut font-medium"
-                    : "text-warm-gray hover:text-walnut"
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
+            {categories.map((category) => {
+              const isActive = !productName && String(currentCategoryId) === String(category.id);
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => onSelectCategory(category.id)}
+                  className={`text-base transition-colors cursor-pointer ${
+                    isActive
+                      ? "text-walnut font-medium"
+                      : "text-warm-gray hover:text-walnut"
+                  }`}
+                >
+                  {category.name}
+                </button>
+              );
+            })}
           </nav>
         </div>
       </div>
@@ -89,7 +92,7 @@ export default function HeaderCatalogDesktop({
                 <button
                   key={product.id}
                   onClick={() => onScrollToProduct?.(product.id)}
-                  className="text-base text-warm-gray hover:text-terra transition-colors"
+                  className="text-base text-warm-gray hover:text-terra transition-colors cursor-pointer"
                 >
                   {product.name}
                 </button>
