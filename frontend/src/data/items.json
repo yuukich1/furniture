@@ -232,18 +232,18 @@
     "name": "Кровать бежевая стела, с подъёмным механизмом",
     "price": 80000,
     "categoryId": 2,
-    "imageUrl": "/placeholder-600x400.png",
+    "imageUrl": "/beds/stella/1.jpg",
     "images": [
       {
         "id": 801,
         "productId": 8,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/beds/stella/2.jpg",
         "isMain": true
       },
       {
         "id": 802,
         "productId": 8,
-        "imageUrl": "/placeholder-600x400.png",
+        "imageUrl": "/beds/stella/3.jpg",
         "isMain": false
       }
     ],
